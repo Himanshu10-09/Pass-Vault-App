@@ -11,7 +11,6 @@ class HomePageTile extends StatefulWidget {
 
 class _HomePageTileState extends State<HomePageTile> {
   bool tapped = false;
-  var selectedItem;
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +96,6 @@ class _HomePageTileState extends State<HomePageTile> {
                   iconSize: WidgetStatePropertyAll(30),
                 ),
                 color: Colors.white54,
-                initialValue: selectedItem,
                 itemBuilder: (context) => <PopupMenuEntry>[
                   PopupMenuItem(
                     onTap: () {
@@ -107,6 +105,7 @@ class _HomePageTileState extends State<HomePageTile> {
                             builder: (context) => const UpdatePasswordPage(),
                           ));
                     },
+                    value: "Edit",
                     child: const ListTile(
                       leading: Icon(
                         Icons.edit,
@@ -117,10 +116,10 @@ class _HomePageTileState extends State<HomePageTile> {
                         style: TextStyle(color: Colors.black, fontSize: 16),
                       ),
                     ),
-                    value: "Edit",
                   ),
                   PopupMenuItem(
                     onTap: () {},
+                    value: "Remove",
                     child: const ListTile(
                       leading: Icon(
                         Icons.delete,
@@ -131,7 +130,6 @@ class _HomePageTileState extends State<HomePageTile> {
                         style: TextStyle(color: Colors.black87, fontSize: 16),
                       ),
                     ),
-                    value: "Remove",
                   ),
                 ],
               )
