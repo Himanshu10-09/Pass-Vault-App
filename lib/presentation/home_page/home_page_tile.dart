@@ -1,9 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:password_vault_app/data/FirebaseService/firestore_service.dart';
 import 'package:password_vault_app/presentation/update_password_data_page/update_password_data_page.dart';
 
 class HomePageTile extends StatefulWidget {
-  final String name;
-  const HomePageTile({super.key, required this.name});
+  final String username;
+  final String website;
+  final String password;
+  final Timestamp timestamp;
+  final String docID;
+  const HomePageTile(
+      {super.key,
+      required this.username,
+      required this.website,
+      required this.password,
+      required this.timestamp,
+      required this.docID});
 
   @override
   State<HomePageTile> createState() => _HomePageTileState();
@@ -15,9 +27,9 @@ class _HomePageTileState extends State<HomePageTile> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 16),
       child: Container(
-        height: 120,
+        height: 150,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           color: const Color(0xff8c8c8c),
@@ -33,7 +45,7 @@ class _HomePageTileState extends State<HomePageTile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.name,
+                    widget.website,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 22,
@@ -43,17 +55,24 @@ class _HomePageTileState extends State<HomePageTile> {
                   const SizedBox(
                     height: 8,
                   ),
+                  Text(
+                    widget.username,
+                    style: const TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       tapped
-                          ? const SelectableText(
-                              "Password shown",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
+                          ? SelectableText(
+                              widget.password,
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 16),
                             )
                           : Text(
-                              "*" * 20,
+                              "*" * widget.password.length,
                               style: const TextStyle(
                                   color: Colors.white, fontSize: 16),
                             ),
@@ -118,7 +137,50 @@ class _HomePageTileState extends State<HomePageTile> {
                     ),
                   ),
                   PopupMenuItem(
-                    onTap: () {},
+                    onTap: () {
+                      try {
+                        FirestoreService().removeData(widget.docID);
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                                backgroundColor: Colors.green,
+                                content: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.done,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      "Data removed successfully",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                                  ],
+                                )));
+                      } on FirebaseException {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                                backgroundColor: Colors.red,
+                                content: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.error_outline,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      "Something went wrong",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                                  ],
+                                )));
+                      }
+                    },
                     value: "Remove",
                     child: const ListTile(
                       leading: Icon(

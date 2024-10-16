@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:password_vault_app/presentation/home_page/home_page.dart';
 
@@ -46,82 +48,64 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
               width: 16,
             ),
             const Text(
-              "Update Password",
-              style: TextStyle(fontSize: 26, color: Colors.white),
+              "Update Data",
+              style: TextStyle(fontSize: 24, color: Colors.white),
             ),
           ],
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
+        padding: const EdgeInsets.all(12.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "*Please enter all the fields to save the password",
-              style: TextStyle(fontSize: 16, color: Colors.grey[500]),
+              "Website:",
+              style: TextStyle(fontSize: 12, color: Colors.grey),
             ),
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              height: 8,
             ),
-            TextFormField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                label: const Text("Name"),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(
-                    style: BorderStyle.solid,
-                    color: Colors.grey,
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(
-                      style: BorderStyle.solid, color: Colors.black, width: 2),
-                ),
+            Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Text(
+                "admin.com",
+                style: TextStyle(fontSize: 16),
               ),
             ),
-            const SizedBox(
+            SizedBox(
               height: 20,
             ),
-            TextFormField(
-              controller: _passwordController,
-              decoration: InputDecoration(
-                label: const Text("Password"),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(
-                    style: BorderStyle.solid,
-                    color: Colors.grey,
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(
-                      style: BorderStyle.solid, color: Colors.black, width: 2),
-                ),
+            Text(
+              "Username:",
+              style: TextStyle(fontSize: 12, color: Colors.grey),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Text(
+                "test@admin.com",
+                style: TextStyle(fontSize: 16),
               ),
             ),
-            const SizedBox(
+            SizedBox(
               height: 20,
             ),
-            TextFormField(
-              controller: _confirmPasswordController,
-              decoration: InputDecoration(
-                label: const Text("Confirm Password"),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(
-                    style: BorderStyle.solid,
-                    color: Colors.grey,
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(
-                      style: BorderStyle.solid, color: Colors.black, width: 2),
-                ),
+            Text(
+              "Password:",
+              style: TextStyle(fontSize: 12, color: Colors.grey),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Text(
+                "12345678",
+                style: TextStyle(fontSize: 16),
               ),
             ),
             const SizedBox(
@@ -131,10 +115,12 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
-                    fixedSize: Size(MediaQuery.of(context).size.width, 55)),
-                child: const Text(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
+                    fixedSize: Size(MediaQuery.of(context).size.width, 50)),
+                child: Text(
                   'Update',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+                  style: TextStyle(fontSize: 16, color: Colors.white),
                 ))
           ],
         ),
