@@ -50,7 +50,7 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
             ),
             const Text(
               "Add New Password",
-              style: TextStyle(fontSize: 24, color: Colors.white),
+              style: TextStyle(fontSize: 20, color: Colors.white),
             ),
           ],
         ),
@@ -69,8 +69,12 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
             ),
             TextFormField(
               controller: _websiteController,
+              cursorColor: Colors.black,
               decoration: InputDecoration(
-                label: const Text("Website"),
+                label: const Text(
+                  "Website",
+                  style: TextStyle(color: Colors.black),
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
                   borderSide: const BorderSide(
@@ -90,8 +94,12 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
             ),
             TextFormField(
               controller: _usernameController,
+              cursorColor: Colors.black,
               decoration: InputDecoration(
-                label: const Text("Username"),
+                label: const Text(
+                  "Username",
+                  style: TextStyle(color: Colors.black),
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
                   borderSide: const BorderSide(
@@ -111,8 +119,12 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
             ),
             TextFormField(
               controller: _passwordController,
+              cursorColor: Colors.black,
               decoration: InputDecoration(
-                label: const Text("Password"),
+                label: const Text(
+                  "Password",
+                  style: TextStyle(color: Colors.black),
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
                   borderSide: const BorderSide(
@@ -132,8 +144,12 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
             ),
             TextFormField(
               controller: _confirmPasswordController,
+              cursorColor: Colors.black,
               decoration: InputDecoration(
-                label: const Text("Confirm Password"),
+                label: const Text(
+                  "Confirm Password",
+                  style: TextStyle(color: Colors.black),
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
                   borderSide: const BorderSide(
@@ -178,7 +194,9 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
                         )));
                   }
                   if (_passwordController.text.trim() !=
-                      _confirmPasswordController.text.trim()) {
+                          _confirmPasswordController.text.trim() &&
+                      _passwordController.text.isNotEmpty &&
+                      _confirmPasswordController.text.isNotEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         backgroundColor: Colors.red,
                         content: Row(
@@ -227,6 +245,13 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
                               ),
                             ],
                           )));
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HomePage(),
+                        ),
+                        (route) => false,
+                      );
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           backgroundColor: Colors.black87,
@@ -253,7 +278,7 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
                     backgroundColor: Colors.black,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16)),
-                    fixedSize: Size(MediaQuery.of(context).size.width, 55)),
+                    fixedSize: Size(MediaQuery.of(context).size.width, 50)),
                 child: const Text(
                   'Save',
                   style: TextStyle(color: Colors.white, fontSize: 20),

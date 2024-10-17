@@ -57,6 +57,21 @@ class FirestoreService {
     });
   }
 
+  Future updateData(
+      String docID, String username, String website, String password) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc("test@admin.com")
+        .collection('passwordDB')
+        .doc(docID)
+        .update({
+      'website': website,
+      'username': username,
+      'password': password,
+      'timestamp': DateTime.now(),
+    });
+  }
+
   Future removeData(String docID) async {
     FirebaseFirestore.instance
         .collection('users')

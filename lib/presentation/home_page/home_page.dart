@@ -5,6 +5,7 @@ import 'package:password_vault_app/data/FirebaseService/firestore_service.dart';
 import 'package:password_vault_app/data/models/saved_data_model.dart';
 import 'package:password_vault_app/presentation/add_password_page/add_password_page.dart';
 import 'package:password_vault_app/presentation/home_page/home_page_tile.dart';
+import 'package:password_vault_app/presentation/login_page/auth.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -37,13 +38,23 @@ class _HomePageState extends State<HomePage> {
             ),
             const Text(
               "PASSVAULT",
-              style: TextStyle(color: Colors.white, fontSize: 24),
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600),
             ),
             const Spacer(),
             IconButton(
                 onPressed: () {
                   try {
                     FirestoreService().logOut();
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AuthPage(),
+                      ),
+                      (route) => false,
+                    );
                   } on FirebaseAuthException {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         backgroundColor: Colors.red,
@@ -90,6 +101,14 @@ class _HomePageState extends State<HomePage> {
                 child: CircularProgressIndicator(
               color: Colors.black,
             ));
+          }
+          if (snapshot.data!.isEmpty) {
+            return const Center(
+              child: Text(
+                'No data found',
+                style: TextStyle(color: Colors.black, fontSize: 16),
+              ),
+            );
           } else if (snapshot.hasError) {
             return Center(
                 child: Text('Error fetching user data: ${snapshot.error}'));
@@ -121,11 +140,13 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.black,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         onPressed: () {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const AddPasswordPage(),
-              ));
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddPasswordPage(),
+            ),
+            (route) => false,
+          );
         },
         child: const Icon(
           Icons.add,

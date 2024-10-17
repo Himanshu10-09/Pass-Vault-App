@@ -44,9 +44,13 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: TextField(
                 controller: _emailController,
+                cursorColor: Colors.black,
                 decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.email),
-                    label: const Text("Username"),
+                    label: const Text(
+                      "Username",
+                      style: TextStyle(color: Colors.black),
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16),
                       borderSide: const BorderSide(
@@ -70,9 +74,13 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: TextField(
                 controller: _passwordController,
+                cursorColor: Colors.black,
                 decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.key),
-                    label: const Text("Password"),
+                    label: const Text(
+                      "Password",
+                      style: TextStyle(color: Colors.black),
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16),
                       borderSide: const BorderSide(
@@ -93,10 +101,8 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.all(20.0),
               child: ElevatedButton(
                   onPressed: () {
-                    try {
-                      FirestoreService().login(_emailController.text.trim(),
-                          _passwordController.text.trim());
-                    } on FirebaseAuthException {
+                    if (_emailController.text.isEmpty ||
+                        _passwordController.text.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           backgroundColor: Colors.red,
                           content: Row(
@@ -109,12 +115,39 @@ class _LoginPageState extends State<LoginPage> {
                                 width: 8,
                               ),
                               Text(
-                                'Something went wrong',
+                                'Please enter all the credentials',
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.white),
                               )
                             ],
                           )));
+                    }
+                    if (_emailController.text.isNotEmpty &&
+                        _passwordController.text.isNotEmpty) {
+                      try {
+                        FirestoreService().login(_emailController.text.trim(),
+                            _passwordController.text.trim());
+                      } on FirebaseAuthException {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                                backgroundColor: Colors.red,
+                                content: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.error_outline,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      'Something went wrong',
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.white),
+                                    )
+                                  ],
+                                )));
+                      }
                     }
                   },
                   style: ElevatedButton.styleFrom(

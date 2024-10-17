@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:password_vault_app/data/FirebaseService/firestore_service.dart';
 import 'package:password_vault_app/presentation/update_password_data_page/update_password_data_page.dart';
 
@@ -33,10 +34,10 @@ class _HomePageTileState extends State<HomePageTile> {
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           color: const Color(0xff8c8c8c),
-          borderRadius: BorderRadius.circular(40),
+          borderRadius: BorderRadius.circular(16),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 24, left: 20),
+          padding: const EdgeInsets.only(top: 16, left: 16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +56,7 @@ class _HomePageTileState extends State<HomePageTile> {
                   const SizedBox(
                     height: 8,
                   ),
-                  Text(
+                  SelectableText(
                     widget.username,
                     style: const TextStyle(color: Colors.white, fontSize: 16),
                   ),
@@ -98,14 +99,43 @@ class _HomePageTileState extends State<HomePageTile> {
                         width: 8,
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          final password = ClipboardData(text: widget.password);
+                          Clipboard.setData(password);
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                                  backgroundColor: Colors.green,
+                                  content: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.done,
+                                        color: Colors.white,
+                                      ),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text(
+                                        'Password copied to clipboard',
+                                        style: TextStyle(
+                                            fontSize: 16, color: Colors.white),
+                                      )
+                                    ],
+                                  )));
+                        },
                         child: Icon(
                           Icons.copy,
                           color: Colors.grey[200],
                         ),
                       )
                     ],
-                  )
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Last updated on: ${widget.timestamp.toDate()}',
+                    style: const TextStyle(fontSize: 12, color: Colors.white70),
+                  ),
                 ],
               ),
               const Spacer(),
@@ -118,11 +148,19 @@ class _HomePageTileState extends State<HomePageTile> {
                 itemBuilder: (context) => <PopupMenuEntry>[
                   PopupMenuItem(
                     onTap: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const UpdatePasswordPage(),
-                          ));
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UpdatePasswordPage(
+                            username: widget.username,
+                            website: widget.website,
+                            password: widget.password,
+                            timestamp: widget.timestamp,
+                            docID: widget.docID,
+                          ),
+                        ),
+                        (route) => false,
+                      );
                     },
                     value: "Edit",
                     child: const ListTile(
