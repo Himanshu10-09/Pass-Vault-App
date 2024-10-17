@@ -28,7 +28,7 @@ class _HomePageTileState extends State<HomePageTile> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 16),
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 8, bottom: 8),
       child: Container(
         height: 150,
         width: MediaQuery.of(context).size.width,
