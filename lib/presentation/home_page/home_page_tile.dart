@@ -223,11 +223,11 @@ class _HomePageTileState extends State<HomePageTile> {
                     child: const ListTile(
                       leading: Icon(
                         Icons.delete,
-                        color: Colors.black,
+                        color: Colors.red,
                       ),
                       title: Text(
                         "Remove",
-                        style: TextStyle(color: Colors.black87, fontSize: 16),
+                        style: TextStyle(color: Colors.red, fontSize: 16),
                       ),
                     ),
                   ),

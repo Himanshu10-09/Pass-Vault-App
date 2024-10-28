@@ -85,7 +85,7 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                 style: TextStyle(fontSize: 12, color: Colors.black87),
               ),
               SizedBox(
-                height: 8,
+                height: 4,
               ),
               TextField(
                 controller: _websiteController,
@@ -110,14 +110,14 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 16,
               ),
               Text(
                 "Username:",
                 style: TextStyle(fontSize: 12, color: Colors.black87),
               ),
               SizedBox(
-                height: 8,
+                height: 4,
               ),
               TextField(
                 controller: _usernameController,
@@ -142,14 +142,14 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 16,
               ),
               Text(
                 "Password:",
                 style: TextStyle(fontSize: 12, color: Colors.black87),
               ),
               SizedBox(
-                height: 8,
+                height: 4,
               ),
               TextField(
                 controller: _passwordController,
@@ -180,7 +180,7 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                 alignment: Alignment.topRight,
                 child: Text(
                   'Last updated on: ${widget.timestamp.toDate()}',
-                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                  style: TextStyle(color: Colors.grey[500], fontSize: 12),
                 ),
               ),
               SizedBox(
